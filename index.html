@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0d1226">
+<title>هدية لكِ</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<style>
+@property --sx{syntax:'<length>';inherits:false;initial-value:40px}
+:root{
+  --bg:#0d1226; --bg2:#1b2350; --moon:#f3ecd6; --ink:#f6f1e1; --dim:#a3abd0;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow:hidden;overscroll-behavior:none;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;position:fixed;inset:0;width:100%;height:100%;overflow:hidden;overscroll-behavior:none;background:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg) 70%) var(--bg);
+  color:var(--ink);font-family:"Amiri","Noto Naskh Arabic",serif;
+  -webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-action:manipulation}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.screen{position:relative;z-index:1;width:100%;max-width:420px;margin:0 auto;height:100%;overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px;text-align:center}
+
+.moonwrap{filter:drop-shadow(0 0 26px rgba(243,236,214,.45));margin-bottom:20px}
+.moon{--sx:40px;width:108px;height:108px;border-radius:50%;
+  background:radial-gradient(circle at 38% 36%,#fffaf0,var(--moon) 55%,#d9cfae);
+  -webkit-mask-image:radial-gradient(circle at calc(50% + var(--sx)) 50%,transparent 53px,#000 54.5px);
+  mask-image:radial-gradient(circle at calc(50% + var(--sx)) 50%,transparent 53px,#000 54.5px);
+  transition:--sx 1.3s ease}
+h1{font-family:"Reem Kufi","Amiri",sans-serif;font-weight:500;font-size:25px;margin:0 0 4px}
+.sub{color:var(--dim);font-size:19px;margin:0 0 20px;min-height:30px;transition:color .3s}
+.sub.err{color:#f2c9a0}
+.dots{display:flex;gap:18px;direction:ltr;margin-bottom:30px;height:14px}
+.dots i{width:13px;height:13px;border-radius:50%;border:1.5px solid #fff;transition:background .15s}
+.dots i.on{background:#fff}
+.dots.shake{animation:shake .5s}
+@keyframes shake{15%{transform:translateX(-11px)}30%{transform:translateX(10px)}45%{transform:translateX(-8px)}60%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
+
+/* iPhone-style keypad */
+.pad{display:grid;grid-template-columns:repeat(3,78px);gap:16px 24px;direction:ltr}
+.pad button{width:78px;height:78px;border-radius:50%;border:0;padding:0;cursor:pointer;color:#fff;
+  background:rgba(255,255,255,.17);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  font-family:-apple-system,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:background .45s ease}
+.pad button:active{background:rgba(255,255,255,.55);transition:none}
+.pad button:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.pad .n{font-size:35px;font-weight:300;line-height:1}
+.pad .l{font-size:10px;letter-spacing:2.5px;font-weight:600;line-height:1;margin-top:3px;height:10px}
+.pad .del{background:none;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:17px;font-family:"Amiri",serif}
+.pad .del:active{background:none;opacity:.5}
+.pad .void{visibility:hidden}
+
+#lock{transition:opacity 1.1s ease,transform 1.1s ease,filter 1.1s ease}
+#lock.out{opacity:0;transform:scale(1.06);filter:blur(6px);pointer-events:none}
+#gift{display:none;opacity:0;transition:opacity 1.8s ease}
+#gift.show{opacity:1}
+#gift .stage{position:relative;width:270px;height:180px;margin-bottom:22px}
+#gift .moonwrap{position:absolute;left:50%;top:50%;margin:-62px 0 0 -62px;filter:drop-shadow(0 0 34px rgba(243,236,214,.7))}
+#gift .moon{width:124px;height:124px;--sx:130px;-webkit-mask-image:none;mask-image:none;
+  background:
+   radial-gradient(circle at 63% 28%,rgba(176,165,132,.38) 0 9px,transparent 10px),
+   radial-gradient(circle at 34% 60%,rgba(176,165,132,.32) 0 13px,transparent 14px),
+   radial-gradient(circle at 66% 70%,rgba(176,165,132,.3) 0 7px,transparent 8px),
+   radial-gradient(circle at 38% 34%,#fffdf4,#f6efd8 55%,#dcd2b0)}
+.halo{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(243,236,214,.22),rgba(243,236,214,0) 65%)}
+.cloud{position:absolute;border-radius:50%;filter:blur(7px);
+  background:radial-gradient(ellipse at 50% 50%,rgba(132,144,196,.92),rgba(110,122,176,.55) 45%,rgba(110,122,176,0) 72%)}
+.ca{left:-10px;top:52px;width:200px;height:74px;transform:translateX(-30px);opacity:.5}
+.cb{left:90px;top:70px;width:190px;height:70px;transform:translateX(34px);opacity:.5}
+.cc{left:0;top:96px;width:270px;height:64px;opacity:.5}
+.cd{left:96px;top:14px;width:130px;height:46px;transform:translateX(60px);opacity:.38}
+#gift.show .moonwrap{animation:rise 4.6s ease-out .4s both}
+#gift.show .ca{animation:partL 5s ease-in-out .5s both}
+#gift.show .cb{animation:partR 5s ease-in-out .5s both}
+#gift.show .cd{animation:partR 6s ease-in-out .3s both}
+#gift.show .halo{animation:glow 5s ease-out .4s both}
+@keyframes rise{from{opacity:.15;transform:translateY(18px) scale(.9);filter:drop-shadow(0 0 0 rgba(243,236,214,0)) brightness(.7)}}
+@keyframes partL{from{transform:translateX(70px);opacity:.96}}
+@keyframes partR{from{transform:translateX(-70px);opacity:.96}}
+@keyframes glow{from{opacity:0}}
+.line{font-size:27px;line-height:2.1;max-width:20em;min-height:1em}
+.line.s{font-size:32px;line-height:1.6;margin-bottom:4px;direction:ltr}
+.line.sig{color:var(--dim);font-size:23px;margin-top:6px}
+.caret::after{content:"";display:inline-block;width:2px;height:1.1em;background:var(--moon);margin-inline-start:3px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.song{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:12px 26px;border-radius:999px;
+  border:1px solid rgba(243,236,214,.4);color:var(--ink);text-decoration:none;font-size:21px;
+  background:rgba(243,236,214,.08);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  opacity:0;pointer-events:none;transition:opacity 1.6s ease}
+.song.show{opacity:1;pointer-events:auto}
+.song:focus-visible{outline:2px solid var(--moon);outline-offset:3px}
+@media (max-height:720px){
+  .moon{width:88px;height:88px}
+  .moonwrap{margin-bottom:12px}
+  h1{font-size:22px}
+  .sub{margin-bottom:14px;font-size:17px}
+  .dots{margin-bottom:20px}
+  .pad{gap:11px 22px;grid-template-columns:repeat(3,68px)}
+  .pad button{width:68px;height:68px}
+  .pad .n{font-size:30px}
+  #gift .stage{transform:scale(.78);margin:-22px 0 -10px}
+  .line{font-size:22px;line-height:1.9}
+  .line.s{font-size:27px}
+  .song{margin-top:14px;font-size:19px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+
+<main class="screen" id="lock">
+  <div class="moonwrap" aria-hidden="true"><div class="moon" id="moon"></div></div>
+  <h1>هديتك جاهزة</h1>
+  <p class="sub" id="hint">اكتبي يوم ميلادك (يوم + شهر)</p>
+  <div class="dots" id="dots" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="pad" id="pad"></div>
+</main>
+
+<main class="screen" id="gift">
+  <div class="stage" aria-hidden="true">
+    <div class="halo"></div>
+    <div class="cloud cc"></div>
+    <div class="moonwrap"><div class="moon"></div></div>
+    <div class="cloud ca"></div>
+    <div class="cloud cb"></div>
+    <div class="cloud cd"></div>
+  </div>
+  <div class="line s" id="l1"></div>
+  <div class="line" id="l2"></div>
+  <div class="line sig" id="l3"></div>
+  <a class="song" id="song" href="https://youtu.be/6YjW05dqec8?si=2fUlBomUbkOUbgF3" target="_blank" rel="noopener">🎵 انتِ عمري</a>
+</main>
+
+<script>
+/* ====== عدّل هنا ====== */
+var CODE  = "1611";
+var WRONG = "يوم اكتمال القمر… ما تعرفين متى؟ 🌕";
+var T1 = "كل عام وأنتِ سعادتي، وابتسامتي، وموطني، يوم ميلاد سعيد يا رفيقة دربي وأجمل أيامي.";
+var T2 = "Souly❤️";
+var T3 = "زوجك";
+/* ===================== */
+
+var entered = "", locked = false, shifts = [58, 74, 90, 104];
+var moon = document.getElementById("moon"), dots = document.querySelectorAll("#dots i"),
+    hint = document.getElementById("hint"), dotsBox = document.getElementById("dots");
+var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---- sound (WebAudio; created on first tap so iPhone allows it) ---- */
+var actx = null;
+function audio(){
+  try{
+    if(!actx){ var AC = window.AudioContext || window.webkitAudioContext; if(AC) actx = new AC(); }
+    if(actx && actx.state === "suspended") actx.resume();
+  }catch(e){}
+}
+function tone(f, t0, dur, vol, type){
+  var o = actx.createOscillator(), g = actx.createGain();
+  o.type = type || "sine"; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, t0);
+  g.gain.exponentialRampToValueAtTime(vol, t0 + 0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0 + dur + 0.05);
+}
+function unlockSound(){
+  try{
+    audio(); if(!actx) return;
+    var t = actx.currentTime + 0.02;
+    tone(180, t, 0.09, 0.25, "square");            /* click */
+    tone(130, t + 0.1, 0.09, 0.22, "square");      /* clack */
+    [784, 988, 1319, 1976].forEach(function(f, i){ tone(f, t + 0.3 + i * 0.12, 0.9, 0.16, "sine"); });
+  }catch(e){}
+}
+function tick(){ try{ if(actx){ tone(1400, actx.currentTime, 0.04, 0.05, "sine"); } }catch(e){} }
+
+/* ---- keypad ---- */
+var letters = {"2":"ABC","3":"DEF","4":"GHI","5":"JKL","6":"MNO","7":"PQRS","8":"TUV","9":"WXYZ"};
+var keys = ["1","2","3","4","5","6","7","8","9","","0","del"];
+var pad = document.getElementById("pad");
+keys.forEach(function(k){
+  var b = document.createElement("button"); b.type = "button";
+  if(k === ""){ b.className = "void"; b.disabled = true; b.setAttribute("aria-hidden","true"); }
+  else if(k === "del"){ b.className = "del"; b.textContent = "حذف"; b.onclick = function(){ audio(); back(); }; }
+  else {
+    b.innerHTML = '<span class="n">' + k + '</span><span class="l">' + (letters[k] || "") + '</span>';
+    b.onclick = function(){ audio(); press(k); };
+  }
+  pad.appendChild(b);
+});
+document.addEventListener("touchstart", function(){}, {passive:true});
+/* app-like: no scroll, no bounce, no pinch/double-tap zoom, no long-press menu */
+document.addEventListener("touchmove", function(e){ e.preventDefault(); }, {passive:false});
+["gesturestart","gesturechange","gestureend","contextmenu","dragstart"].forEach(function(ev){
+  document.addEventListener(ev, function(e){ e.preventDefault(); });
+});
+
+function render(){
+  dots.forEach(function(d,i){ d.classList.toggle("on", i < entered.length); });
+  moon.style.setProperty("--sx", (entered.length ? shifts[entered.length-1] : 40) + "px");
+}
+function press(d){
+  if(locked || entered.length >= 4) return;
+  entered += d; render(); tick();
+  if(hint.className !== "sub"){ hint.className = "sub"; hint.textContent = "اكتبي يوم ميلادك (يوم + شهر)"; }
+  if(entered.length === 4) setTimeout(check, 260);
+}
+function back(){ if(locked) return; entered = entered.slice(0,-1); render(); }
+
+function check(){
+  if(entered === CODE){ unlock(); return; }
+  locked = true;
+  hint.textContent = WRONG; hint.className = "sub err";
+  dotsBox.classList.remove("shake"); void dotsBox.offsetWidth; dotsBox.classList.add("shake");
+  try{ if(navigator.vibrate) navigator.vibrate([70, 40, 70]); }catch(e){}   /* Android; iPhone uses the visual shake */
+  setTimeout(function(){ dotsBox.classList.remove("shake"); entered = ""; render(); locked = false; }, 700);
+}
+
+function unlock(){
+  locked = true; unlockSound();
+  moon.style.setProperty("--sx", "120px");
+  hint.textContent = "";
+  setTimeout(function(){
+    document.getElementById("lock").classList.add("out");
+    setTimeout(function(){
+      document.getElementById("lock").style.display = "none";
+      var g = document.getElementById("gift"); g.style.display = "flex";
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){ g.classList.add("show"); }); });
+      setTimeout(typeAll, 3200);
+    }, 1100);
+  }, 1300);
+}
+
+/* ---- typewriter ---- */
+function typeInto(el, text, speed, done){
+  var chars = Array.from(text), i = 0;
+  el.classList.add("caret");
+  (function step(){
+    if(i < chars.length){ el.textContent += chars[i++]; setTimeout(step, speed); }
+    else { el.classList.remove("caret"); if(done) done(); }
+  })();
+}
+function typeAll(){
+  var sp = reduce ? 0 : 75;
+  typeInto(document.getElementById("l1"), T2, 130, function(){
+    setTimeout(function(){
+      typeInto(document.getElementById("l2"), T1, sp, function(){
+        setTimeout(function(){
+          typeInto(document.getElementById("l3"), T3, 130, function(){
+            setTimeout(function(){ document.getElementById("song").classList.add("show"); }, 700);
+          });
+        }, 500);
+      });
+    }, 600);
+  });
+}
+
+document.addEventListener("keydown", function(e){
+  if(e.key >= "0" && e.key <= "9"){ audio(); press(e.key); }
+  else if(e.key === "Backspace") back();
+});
+
+/* ---- starry sky ---- */
+(function(){
+  var c = document.getElementById("sky"), x = c.getContext("2d"), stars = [], shoot = null, W, H, dpr;
+  function size(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
+    c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    var n = Math.round(W * H / 5500); stars = [];
+    for(var i = 0; i < n; i++) stars.push({x:Math.random()*W, y:Math.random()*H, r:Math.random()*1.3+.3, p:Math.random()*6.28, s:Math.random()*1.4+.4});
+  }
+  function frame(t){
+    x.clearRect(0,0,W,H);
+    stars.forEach(function(s){
+      var a = reduce ? .7 : .35 + .65 * (.5 + .5 * Math.sin(t/1000 * s.s + s.p));
+      x.globalAlpha = a; x.fillStyle = "#fff6dc"; x.beginPath(); x.arc(s.x, s.y, s.r, 0, 6.28); x.fill();
+    });
+    if(!reduce){
+      if(!shoot && Math.random() < .004) shoot = {x:Math.random()*W*.8+W*.2, y:Math.random()*H*.35, l:0};
+      if(shoot){
+        shoot.l += 9; var dx = shoot.x - shoot.l * .85, dy = shoot.y + shoot.l * .5;
+        var g = x.createLinearGradient(shoot.x - (shoot.l-60)*.85, shoot.y + (shoot.l-60)*.5, dx, dy);
+        g.addColorStop(0, "rgba(255,246,220,0)"); g.addColorStop(1, "rgba(255,246,220,.9)");
+        x.globalAlpha = 1; x.strokeStyle = g; x.lineWidth = 1.6; x.beginPath();
+        x.moveTo(shoot.x - (shoot.l-60)*.85, shoot.y + (shoot.l-60)*.5); x.lineTo(dx, dy); x.stroke();
+        if(shoot.l > 260) shoot = null;
+      }
+      requestAnimationFrame(frame);
+    }
+  }
+  size(); addEventListener("resize", size); requestAnimationFrame(frame);
+})();
+render();
+</script>
+</body>
+</html>
